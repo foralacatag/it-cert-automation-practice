@@ -84,10 +84,10 @@ def main(argv):
   # TODO: send the PDF report as an email attachment
   sender = "automation@example.com"
   receiver = "{}@example.com".format(os.environ.get('USER'))
-  subject = "Sales summary of last month"
+  subject = "Sales summary for last month"
   body = summary
   
-  reports.generate("/tmp/cars.pdf", "Sales summary of last month", summary, table_data)
+  reports.generate("/tmp/cars.pdf", "Sales summary for last month", summary, table_data)
 
   message = emails.generate(sender, receiver, subject, body, "/tmp/cars.pdf")
   emails.send(message)
