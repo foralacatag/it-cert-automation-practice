@@ -3,7 +3,7 @@
 from PIL import Image
 #from resizeimage  import resizeimage
 import os
-home="/home/student-00-f3438403c3f4/supplier-data/images/"
+home=os.getcwd()+"/supplier-data/images/"
 os.chdir(home)
 arr = [f for f in os.listdir('.') if f.endswith('.tiff')]
 print(arr)
