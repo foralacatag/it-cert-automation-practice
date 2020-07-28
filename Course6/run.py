@@ -1,40 +1,59 @@
 #! /usr/bin/env python3
-import json
 import os
 import requests
+import re
+import json
 
-#list comprehension for all text files
-files=[f for f in os.listdir('/data/feedback') if f.endswith('.txt')]
 
-#with open('people.json', 'w') as people_json:
-#    json.dump(files, people_json, indent=2)
-#change directory to current one
-os.chdir("/data/feedback/")
+print(files)
 
-#print(files)
+def load_data(filename):
+  """Loads the contents of filename as a JSON file."""
+  with open(filename) as json_file:
+    data = json.load(json_file)
+  return data
+
 
 #list to hold each dictionary  from each file
-list=[]
-titles=["title", "name", "date", "feedback"]
+def data_dict():
+  home="/home/student-00-f3438403c3f4/supplier-data/descriptions/"
+  os.chdir(home)
+  files = [f for f in os.listdir('.') if f.endswith('.txt')]
+  sorted(files)
+  list=[]
+
+
+  titles=["name", "weight", "description", "image_name"]
 
 #iterate over each file to add it to the list
-for file in files:
-    dict1={}
-    with open(file) as fh: 
-        command=0
-        for line in fh: 
-  
-            # reads each line and trims of extra the spaces  
-            # and gives only the valid words 
-            
-            description = line.strip()
-            dict1[titles[command]] = description.strip() 
-            command+=1
+  for file in files:
+    with open(file) as fh:
+      command=0 
+      dict1={}
+      dict1[titles[3]]=os.path.basename(file[:-4])+".jpeg"
+      for line in fh:
+            # reads each line and trims of extra the spaces
+            # and gives only the valid words
+        description = line.strip()
+        if command == 1:
+          dict1[titles[command]]=int(re.split('[\s,]+',description)[0])
+        else:
+          dict1[titles[command]] = description.strip()
+        command+=1
+    #print(dict1)
     list.append(dict1)
-#print(list)
+  return list
 
-#post each dictionary to website feedback page
-for elem in list:
-    #p={"title": elem["title"], "name":elem["name"], "date":elem["date"], "feedback":elem["feedback"]}
-    response = requests.post("http://35.238.69.203/feedback/", data=elem)
-    print(response.status_code)
+#add list to json file
+with open('fruits.json', 'w') as fruit_json:
+    json.dumps(list, fruit_json, indent=2)
+
+
+#Post each dictionary element to the website
+url = "http://localhost/fruits/"
+#with open("fruits.json", 'rb') as opened:
+elem=load_data(data_dict())
+print(elem)
+r = requests.post(url, data=elem)
+print(r.status_code)
+
