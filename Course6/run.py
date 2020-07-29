@@ -3,6 +3,7 @@ import os
 import requests
 import re
 import json
+import pathlib
 
 
 print(files)
@@ -41,6 +42,9 @@ def data_dict():
           dict1[titles[command]] = description.strip()
         command+=1
     #print(dict1)
+    #Added creating text files with names and weights
+    with open("report.txt", ('a' if pathlib.Path('report.txt').exists() else 'w')) as file:
+      file.write(    "name: {}\nweight: {} lbs\n\n".format(dict1["name"], dict1["weight"])   )
     list.append(dict1)
   return list
 
