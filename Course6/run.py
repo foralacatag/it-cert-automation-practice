@@ -17,7 +17,7 @@ def load_data(filename):
 
 #list to hold each dictionary  from each file
 def data_dict():
-  home="/home/student-02-a6b22d3abcd6/supplier-data/descriptions/"
+  home="/home/{}/supplier-data/descriptions/".format(os.environ.get('USER'))
   os.chdir(home)
   files = [f for f in os.listdir('.') if f.endswith('.txt')]
   sorted(files)
@@ -45,7 +45,7 @@ def data_dict():
 
     print(dict1)
     #Added creating text files with names and weights
-    with open("/home/student-02-a6b22d3abcd6/report.txt", 'a') as file:
+    with open("/home/{}/report.txt".format(os.environ.get('USER')), 'a') as file:
       file.write("name: {}\nweight: {} lbs\n".format(dict1["name"], dict1["weight"])   )
     list.append(dict1)
   return list
