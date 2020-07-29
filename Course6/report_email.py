@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-import datetime
+from datetime import datetime
 import os
 import requests
 import emails
 from datetime import datetime
 import run
-
+import reports
 
 if __name__ == "__main__":
-     title="Processed Update on " + datetime.datetime.today().strftime('%B %d %Y')
-     with open("reports.txt", "r") as file:
-          paragraph=file.read()
-     reports.generate_report("/tmp/processed.pdf", title, paragraph)
+     title="Processed Update on " + datetime.today().strftime('%B %d, %Y')
+     paragraph="/home/{}/report.txt".format(os.environ.get('USER'))
+     reports.generate_reports("/tmp/processed.pdf", title, paragraph)
      sender = "automation@example.com"
      receiver = "{}@example.com".format(os.environ.get('USER'))
      subject = "Upload Completed - Online Fruit Store"
