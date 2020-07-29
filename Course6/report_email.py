@@ -8,7 +8,7 @@ import run
 
 
 if __name__ == "__main__":
-     title="Processed Update on" + datetime.today().strftime('%Y-%m-%d')
+     title="Processed Update on " + datetime.datetime.today().strftime('%B %d %Y')
      with open("reports.txt", "r") as file:
           paragraph=file.read()
      reports.generate_report("/tmp/processed.pdf", title, paragraph)
