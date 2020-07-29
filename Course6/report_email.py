@@ -9,15 +9,13 @@ import run
 
 if __name__ == "__main__":
      title="Processed Update on" + datetime.today().strftime('%Y-%m-%d')
-     list=run.data_dict()
-     for elem in list:
-       paragah="name: {}\nweight: {} lbs".format(elem["name"], elem["weight"])
-       reports.generate_report("/tmp/processed.pdf", title, paragrah)
+     with open("reports.txt", "r") as file:
+          paragraph=file.read()
+     reports.generate_report("/tmp/processed.pdf", title, paragraph)
+     sender = "automation@example.com"
+     receiver = "{}@example.com".format(os.environ.get('USER'))
+     subject = "Upload Completed - Online Fruit Store"
+     body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email"
 
-sender = "automation@example.com"
-receiver = "{}@example.com".format(os.environ.get('USER'))
-subject = "Upload Completed - Online Fruit Store"
-body = "All fruits are uploaded to our website successfully. A detailed list is attached to this email"
-
-message = emails.generate(sender, receiver, subject, body, "/tmp/processed.pdf")
-emails.send(message)
+     message = emails.generate_email(sender, receiver, subject, body, "/tmp/processed.pdf")
+     emails.send_email(message)
